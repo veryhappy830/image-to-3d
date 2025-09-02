@@ -15,7 +15,8 @@ pipeline = TrellisImageTo3DPipeline.from_pretrained("microsoft/TRELLIS-image-lar
 pipeline.cuda()
 
 # Load an image
-image = Image.open("./output.png")
+image_path = input("Image Path: ")
+image = Image.open(image_path)
 
 # Run the pipeline
 outputs = pipeline.run(
@@ -30,7 +31,7 @@ outputs = pipeline.run(
 
 # Render the outputs
 video = render_utils.render_video(outputs['gaussian'][0])['color']
-imageio.mimsave("output.mp4", video, fps=30)
+imageio.mimsave("output/output.mp4", video, fps=30)
 
 # Save Gaussians as PLY files
-outputs['gaussian'][0].save_ply("output.ply")
+outputs['gaussian'][0].save_ply("output/output.ply")
